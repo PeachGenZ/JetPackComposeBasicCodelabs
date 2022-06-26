@@ -1,5 +1,6 @@
 package com.peachgenz.jetpackcomposebasiccodelabs
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.peachgenz.jetpackcomposebasiccodelabs.ui.theme.JetpackComposeBasicCodelabsTheme
@@ -31,7 +33,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp() {
-    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
+    var shouldShowOnboarding by rememberSaveable { mutableStateOf(false) }
 
     if (shouldShowOnboarding) {
         OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
@@ -61,13 +63,13 @@ fun OnboardingScreen(onContinueClicked: () -> Unit) {
 
 @Composable
 private fun Greetings(names: List<String> = List(1000) { "$it" }) {
-   LazyColumn(
+    LazyColumn(
 
-   ) {
-       items(items = names) { name ->
-           Greeting(name = name)
-       }
-   }
+    ) {
+        items(items = names) { name ->
+            Greeting(name = name)
+        }
+    }
 }
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
@@ -101,7 +103,12 @@ fun Greeting(name: String) {
                     .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello,")
-                Text(text = name)
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.h4.copy(
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                )
             }
             OutlinedButton(
                 onClick = { expanded = !expanded }
@@ -112,7 +119,13 @@ fun Greeting(name: String) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 320)
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    uiMode = UI_MODE_NIGHT_YES,
+    name = "DefaultPreviewDark"
+)
+@Preview(showBackground = true, widthDp = 320, heightDp = 600)
 @Composable
 fun DefaultPreview() {
     JetpackComposeBasicCodelabsTheme {

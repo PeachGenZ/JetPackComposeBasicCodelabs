@@ -1,1 +1,1 @@
-# JetPackComposeBasicCodelabs
+# JetPack-Compose-Codelabs

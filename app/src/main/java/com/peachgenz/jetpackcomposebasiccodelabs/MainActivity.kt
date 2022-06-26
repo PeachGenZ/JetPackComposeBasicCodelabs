@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JetpackComposeBasicCodelabsTheme {
+            JetpackComposeBasicCodelabsTheme() {
                 MyApp()
             }
         }
@@ -36,8 +36,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp() {
-    var shouldShowOnboarding by rememberSaveable { mutableStateOf(false) }
+private fun MyApp() {
+    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
 
     if (shouldShowOnboarding) {
         OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
@@ -47,45 +47,35 @@ fun MyApp() {
 }
 
 @Composable
-fun OnboardingScreen(onContinueClicked: () -> Unit) {
+private fun OnboardingScreen(onContinueClicked: () -> Unit) {
     Surface {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Welcome to the Basics Codelab!")
+            Text("Welcome to the Basics Codelab!")
             Button(
                 modifier = Modifier.padding(vertical = 24.dp),
                 onClick = onContinueClicked
             ) {
-                Text(text = "Continue")
+                Text("Continue")
             }
         }
     }
 }
 
 @Composable
-private fun Greetings(names: List<String> = List(1000) { "$it" }) {
-    LazyColumn(
-
-    ) {
+private fun Greetings(names: List<String> = List(1000) { "$it" } ) {
+    LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
         items(items = names) { name ->
             Greeting(name = name)
         }
     }
 }
 
-@Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
-fun OnboardingPreview() {
-    JetpackComposeBasicCodelabsTheme {
-        OnboardingScreen(onContinueClicked = {}) // Do nothing on click.
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
+private fun Greeting(name: String) {
     Card(
         backgroundColor = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
@@ -96,7 +86,7 @@ fun Greeting(name: String) {
 
 @Composable
 private fun CardContent(name: String) {
-    var expanded by rememberSaveable { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
 
     Row(
         modifier = Modifier
@@ -131,10 +121,11 @@ private fun CardContent(name: String) {
             Icon(
                 imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
                 contentDescription = if (expanded) {
-                    stringResource(id = R.string.show_less)
+                    stringResource(R.string.show_less)
                 } else {
-                    stringResource(id = R.string.show_more)
+                    stringResource(R.string.show_more)
                 }
+
             )
         }
     }
@@ -146,10 +137,18 @@ private fun CardContent(name: String) {
     uiMode = UI_MODE_NIGHT_YES,
     name = "DefaultPreviewDark"
 )
-@Preview(showBackground = true, widthDp = 320, heightDp = 600)
+@Preview(showBackground = true, widthDp = 320)
 @Composable
 fun DefaultPreview() {
     JetpackComposeBasicCodelabsTheme {
-        MyApp()
+        Greetings()
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Composable
+fun OnboardingPreview() {
+    JetpackComposeBasicCodelabsTheme {
+        OnboardingScreen(onContinueClicked = {})
     }
 }

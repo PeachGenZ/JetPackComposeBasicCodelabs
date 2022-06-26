@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.JetpackComposeBasicCodelabs" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+    <style name="Theme.JetpackComposeBasicCodelabs" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
     </style>
+
+    <style name="Theme.JetpackComposeBasicCodelabs.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.JetpackComposeBasicCodelabs.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.JetpackComposeBasicCodelabs.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
